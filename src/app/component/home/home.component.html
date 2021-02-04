@@ -1,46 +1,19 @@
 <div class="jumbotron bg-white"  >
     <h1 class="display-4">Corona Covid-19 Tracker</h1>
     <hr>
-    <div class="row">
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                   <h1> Confirmed</h1>
-                </div>
-                <div class="value" >
-                <p style="font-size:3vw;">{{totalConfirmed}}</p> 
-                </div>
-              </div>
-        </div>
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                 <h1> Recovered </h1>
-                </div>
-                <div class="value">
-                    <p style="font-size:3vw;"> {{totalRecovered}}</p>
-                </div>
-              </div>
-        </div>
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                 <h1>Deaths</h1>
-                </div>
-                <div class="value">
-                    <p style="font-size:3vw;">{{totalDeaths}}</p>
-                </div>
-              </div>
-        </div>
-        <div class="card col p-3 m-3">
-            <div class="ui statistic">
-                <div class="label">
-                  <h1>Active</h1>
-                </div>
-                <div class="value">
-                    <p style="font-size:3vw;">{{totalActive}}</p>
-                </div>
-              </div>
-        </div>
-        
-</div>
+    <div>
+    <app-dash-board-card [totalConfirmed]='totalConfirmed'
+    [totalActive]="totalActive"
+    [totalRecovered]="totalRecovered"
+    [totalDeaths]="totalDeaths"
+    ></app-dash-board-card>
+   </div>
+   <div class="row">
+   <div class="col-80"><google-chart [data]="pieChart"></google-chart></div>
+   <div class="col"><google-chart [data]="columnChart"></google-chart></div>
+   </div>
+ </div> 
+ 
+
+ 
+ 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleChartInterface } from 'ng2-google-charts';
 import { GlobalDataSummary } from 'src/app/model/global-data';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
@@ -14,28 +15,17 @@ export class HomeComponent implements OnInit {
   totalDeaths = 0;
   totalRecovered = 0;
   globalData:GlobalDataSummary[];
+  pieChart:GoogleChartInterface={
+    chartType:'PieChart'
+  }
+  columnChart:GoogleChartInterface={
+    chartType:'ColumnChart'
+  }
 
   constructor(private dataService:DataServiceService) { }
-
+ 
+  
   ngOnInit(): void {
-  //   this.dataService.getGlobalData().subscribe(
-  //     {
-  //       next:(result) => {
-  //         console.log(result);
-  //         this.globalData=result;
-  //         result.forEach(cs=>{
-  //           if(Number.isNaN(cs.confirmed))
-  //           {
-  //             this.totalActive+=cs.active
-  //             this.totalConfirmed+=cs.confirmed
-  //             this.totalDeaths+=cs.deaths
-  //             this.totalRecovered+=cs.recovered
-  //           }
-  //         })
-  //       }
-  //     }
-  //   );
-  // }
   this.dataService.getGlobalData()
       .subscribe(
         {
@@ -51,14 +41,40 @@ export class HomeComponent implements OnInit {
               }
 
             })
+            this.initChart();
             console.log("active cases of covid",this.totalActive)
 
-            //this.initChart('c');
+            
           }, 
-         // complete : ()=>{
-           // this.loading = false;
+      
           }
         
       )
 
-        }}
+        }
+        initChart()
+        {
+          let datatable=[];
+          datatable.push(["Country","Cases"])
+          this.globalData.forEach(cs=>
+            {
+              if(cs.confirmed>500000)
+              datatable.push([cs.country,cs.confirmed])
+            })
+          this.pieChart= {
+            chartType: 'PieChart',
+            dataTable: datatable,
+            //firstRowIsData: true,
+            options: {height:500},
+          };
+          this.columnChart= {
+            chartType: 'ColumnChart',
+            dataTable: datatable,
+            //firstRowIsData: true,
+            options: {height:500},
+          };
+        }
+        
+        
+        
+      }
